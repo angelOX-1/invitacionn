@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mandarino | Nuestros recuerdos</title>
+
+    <link rel="stylesheet" href="fotos.css">
+
+    <style>
+
+        /* =====================================================
+           VENTANA DE EDICIÓN
+           ===================================================== */
+
+        .editor-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 9999;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        .editor-overlay.mostrar {
+            display: flex;
+        }
+
+
+        .editor-ventana {
+            width: min(850px, 94vw);
+            max-height: 90vh;
+            overflow-y: auto;
+
+            background: #171317;
+            border: 1px solid rgba(180, 40, 70, .45);
+            border-radius: 16px;
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.75),
+                0 0 40px rgba(125,29,53,.15);
+
+            padding: 25px;
+
+            position: relative;
+
+            animation:
+                aparecerEditor
+                .3s
+                ease
+                forwards;
+        }
+
+
+        @keyframes aparecerEditor {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+
+        .editor-cerrar {
+            position: absolute;
+
+            top: 12px;
+            right: 15px;
+
+            width: 36px;
+            height: 36px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.08);
+            color: white;
+
+            font-size: 25px;
+            line-height: 1;
+
+            cursor: pointer;
+
+            z-index: 5;
+
+            transition: .25s ease;
+        }
+
+
+        .editor-cerrar:hover {
+            background: #7d1d35;
+            transform: rotate(90deg);
+        }
+
+
+        .editor-titulo-principal {
+            color: white;
+            font-size: 22px;
+            margin: 0 45px 20px 0;
+        }
+
+
+        .editor-titulo-principal span {
+            color: #9e2947;
+        }
+
+
+        /* =====================================================
+           PREVISUALIZACIÓN
+           ===================================================== */
+
+        .editor-preview {
+            width: 100%;
+            height: 330px;
+
+            background: #090909;
+
+            border-radius: 10px;
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 22px;
+
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+
+        .editor-preview img,
+        .editor-preview video {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        /* =====================================================
+           CAMPOS
+           ===================================================== */
+
+        .editor-campo {
+            margin-bottom: 17px;
+        }
+
+
+        .editor-campo label {
+            display: block;
+
+            color: #ddd;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+
+        .editor-campo input,
+        .editor-campo textarea {
+
+            width: 100%;
+            box-sizing: border-box;
+
+            background: #0e0e0e;
+
+            border: 1px solid #333;
+
+            border-radius: 8px;
+
+            color: white;
+
+            padding: 12px 13px;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            outline: none;
+
+            transition: .25s ease;
+        }
+
+
+        .editor-campo input:focus,
+        .editor-campo textarea:focus {
+
+            border-color: #8b2038;
+
+            box-shadow:
+                0 0 0 2px rgba(139,32,56,.15);
+
+        }
+
+
+        .editor-campo textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+
+        }
+
+
+        /* =====================================================
+           BOTONES DEL EDITOR
+           ===================================================== */
+
+        .editor-botones {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 5px;
+        }
+
+
+        .editor-botones button {
+
+            border: none;
+
+            border-radius: 7px;
+
+            padding: 10px 18px;
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+
+        .editor-cancelar {
+
+            background: #333;
+
+            color: white;
+        }
+
+
+        .editor-cancelar:hover {
+
+            background: #444;
+
+        }
+
+
+        .editor-guardar {
+
+            background: #7d1d35;
+
+            color: white;
+
+        }
+
+
+        .editor-guardar:hover {
+
+            background: #a12648;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* =====================================================
+           BOTÓN EDITAR EN CADA TARJETA
+           ===================================================== */
+
+        .boton-editar {
+
+            border: none;
+
+            background: #7d1d35;
+
+            color: white;
+
+            border-radius: 5px;
+
+            padding: 6px 9px;
+
+            font-size: 9px;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+
+            white-space: nowrap;
+        }
+
+
+        .boton-editar:hover {
+
+            background: #a12648;
+
+            transform: scale(1.05);
+
+        }
+
+
+        .descripcion-contenido {
+
+            flex: 1;
+
+            min-width: 0;
+
+        }
+
+
+        /* =====================================================
+           AVISO DE GUARDADO
+           ===================================================== */
+
+        .editor-guardado {
+
+            position: fixed;
+
+            left: 50%;
+
+            bottom: 25px;
+
+            transform: translateX(-50%);
+
+            z-index: 10001;
+
+            background: #7d1d35;
+
+            color: white;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            font-size: 11px;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: .3s ease;
+        }
+
+
+        .editor-guardado.mostrar {
+
+            opacity: 1;
+
+        }
+
+
+        /* =====================================================
+           MÓVIL
+           ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .editor-overlay {
+
+                padding: 12px;
+
+            }
+
+
+            .editor-ventana {
+
+                padding: 18px;
+
+                width: 96vw;
+
+            }
+
+
+            .editor-preview {
+
+                height: 250px;
+
+            }
+
+
+            .editor-botones {
+
+                flex-direction: column;
+
+            }
+
+
+            .editor-botones button {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         FONDO
+    =========================================== -->
+
+   <div class="ritual-fondo">
+
+    <div class="torre-ritual torre-1">
+        <div class="torre-punta"></div>
+        <div class="torre-cuerpo"></div>
+        <div class="torre-puerta"></div>
+        <div class="torre-ventana"></div>
+    </div>
+
+    <div class="torre-ritual torre-2">
+        <div class="torre-punta"></div>
+        <div class="torre-cuerpo"></div>
+        <div class="torre-puerta"></div>
+        <div class="torre-ventana"></div>
+    </div>
+
+    <div class="torre-ritual torre-3">
+        <div class="torre-punta"></div>
+        <div class="torre-cuerpo"></div>
+        <div class="torre-puerta"></div>
+        <div class="torre-ventana"></div>
+    </div>
+
+    <div class="torre-ritual torre-4">
+        <div class="torre-punta"></div>
+        <div class="torre-cuerpo"></div>
+        <div class="torre-puerta"></div>
+        <div class="torre-ventana"></div>
+    </div>
+    
+</div>
+
+    <!-- ==========================================
+         DASHBOARD
+    =========================================== -->
+
+    <header class="dashboard">
+
+        <a href="index.html" class="dashboard-logo">
+            Mandarino
+        </a>
+
+
+        <nav class="dashboard-menu">
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+
+            <button onclick="mostrarCategoria('juegos', this)">
+                🎮 Juegos
+            </button>
+
+
+            <button onclick="mostrarCategoria('gatos', this)">
+                🐱 Gatos
+            </button>
+
+
+            <button onclick="mostrarCategoria('mundial2026', this)">
+                ⚽ Mundial
+            </button>
+
+
+            <button onclick="mostrarCategoria('salidas', this)">
+                🌆 Salidas
+            </button>
+
+
+            <button onclick="mostrarCategoria('cosasramdom', this)">
+                ✨ Random
+            </button>
+
+        </nav>
+
+
+        <a href="index.html" class="dashboard-boton">
+            Volver
+        </a>
+
+    </header>
+
+
+    <!-- ==========================================
+         ENCABEZADO
+    =========================================== -->
+
+    <header class="header">
+
+        <div class="linea"></div>
+
+        <p class="pequeno">
+            MANDARINO PRESENTA
+        </p>
+
+
+        <h1>
+
+            Nuestros
+            <span>recuerdos</span>
+
+        </h1>
+
+
+        <p class="subtitulo">
+
+            pam pam pam.
+
+        </p>
+
+
+        <div class="separador">
+
+            <span></span>
+
+            <span></span>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================
+         CATEGORÍAS
+    =========================================== -->
+
+    <nav class="categorias">
+
+
+        <button
+            class="categoria activa"
+            onclick="mostrarCategoria('juegos', this)">
+
+            <span>🎮</span>
+            Juegos
+
+        </button>
+
+
+        <button
+            class="categoria"
+            onclick="mostrarCategoria('gatos', this)">
+
+            <span>🐱</span>
+            Gatos
+
+        </button>
+
+
+        <button
+            class="categoria"
+            onclick="mostrarCategoria('mundial2026', this)">
+
+            <span>⚽</span>
+            Mundial 2026
+
+        </button>
+
+
+        <button
+            class="categoria"
+            onclick="mostrarCategoria('salidas', this)">
+
+            <span>🌆</span>
+            Salidas
+
+        </button>
+
+
+        <button
+            class="categoria"
+            onclick="mostrarCategoria('cosasramdom', this)">
+
+            <span>✨</span>
+            Random
+
+        </button>
+
+
+    </nav>
+
+
+    <!-- ==========================================
+         GALERÍA
+    =========================================== -->
+
+    <main class="contenedor">
+
+        <section id="galeria-contenido"></section>
+
+    </main>
+
+
+    <!-- ==========================================
+         VISOR DE FOTOS / VIDEOS
+    =========================================== -->
+
+    <div class="visor" id="visor">
+
+
+        <button
+            class="cerrar"
+            onclick="cerrarFoto()">
+
+            ×
+
+        </button>
+
+
+        <div
+            class="visor-contenido"
+            id="visorContenido">
+
+
+            <img
+                id="imagenGrande"
+                src=""
+                alt="Recuerdo">
+
+
+            <video
+                id="videoGrande"
+                controls
+                playsinline>
+            </video>
+
+
+            <div class="visor-linea"></div>
+
+
+            <p id="visorTexto">
+
+                Un recuerdo para siempre.
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         VENTANA DE EDICIÓN
+    =========================================== -->
+
+    <div
+        class="editor-overlay"
+        id="editorOverlay">
+
+
+        <div class="editor-ventana">
+
+
+            <button
+                class="editor-cerrar"
+                onclick="cerrarEditor()">
+
+                ×
+
+            </button>
+
+
+            <h2 class="editor-titulo-principal">
+
+                Editar <span>recuerdo</span>
+
+            </h2>
+
+
+            <!-- PREVIEW -->
+
+            <div
+                class="editor-preview"
+                id="editorPreview">
+
+            </div>
+
+
+            <!-- TÍTULO -->
+
+            <div class="editor-campo">
+
+                <label for="editorTitulo">
+                    Título
+                </label>
+
+
+                <input
+                    type="text"
+                    id="editorTitulo"
+                    placeholder="Escribe el título...">
+
+            </div>
+
+
+            <!-- DESCRIPCIÓN -->
+
+            <div class="editor-campo">
+
+                <label for="editorDescripcion">
+                    Descripción
+                </label>
+
+
+                <textarea
+                    id="editorDescripcion"
+                    placeholder="Escribe una descripción...">
+                </textarea>
+
+            </div>
+
+
+            <!-- BOTONES -->
+
+            <div class="editor-botones">
+
+
+                <button
+                    class="editor-cancelar"
+                    onclick="cerrarEditor()">
+
+                    Cancelar
+
+                </button>
+
+
+                <button
+                    class="editor-guardar"
+                    onclick="guardarEdicion()">
+
+                    Guardar cambios
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- AVISO -->
+
+    <div
+        class="editor-guardado"
+        id="editorGuardado">
+
+        ✓ Cambios guardados
+
+    </div>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script>
+
+
+        /* ======================================================
+           TUS ARCHIVOS ORIGINALES
+           ====================================================== */
+
+
+        const categorias = {
+
+
+            juegos: {
+
+                titulo: "Nuestros juegos",
+
+                descripcion:
+                    "Porque hasta jugando se crean recuerdos.",
+
+                numero: "01",
+
+                carpeta: "juegos",
+
+                archivos: [
+
+                    "WhatsApp Image 2026-10-06 at 8.36.55 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.37.15 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.09 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.11 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.49 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.50 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.50 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.51 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.53 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.53 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.53 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.06 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.08 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.30 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.06 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.31 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.34 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.34 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.34 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.35 AM.jpeg"
+
+                ]
+
+            },
+
+
+            gatos: {
+
+                titulo: "Nuestros gatos",
+
+                descripcion:
+                    "Porque ellos también forman parte de nuestros recuerdos.",
+
+                numero: "02",
+
+                carpeta: "gatos",
+
+                archivos: [
+
+                    "WhatsApp Image 2026-10-06 at 8.40.08 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.08 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.08 AM (3).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.08 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.09 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.09 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.09 AM (3).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.09 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.10 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.10 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.10 AM (3).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.10 AM (4).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.10 AM (5).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.10 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.49 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.51 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.52 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.52 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.52 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.52 AMb.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.03 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.03 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.05 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.07 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.07 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.07 AM (3).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.07 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.08 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.08 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.09 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.09 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.09 AMaa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.29 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.29 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.29 AMaa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.30 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.30 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.30 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.31 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.32 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.33 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.36 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.00 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.03 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.04 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.04 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.04 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.04 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.06 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.28 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.29 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.30 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.31 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.31 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.32 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.32 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.32 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.32 AMa.jpeg",
+
+                    "WhatsApp Video 2026-10-06 at 8.40.08 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.40.52 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.40.53 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.42.06 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.42.07 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.42.31 AM (1).mp4",
+                    "WhatsApp Video 2026-10-06 at 8.42.31 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.42.32 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.42.36 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.43.02 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.43.04 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.12 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.16 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.20 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.23 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.25 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.27 AM.mp4"
+
+                ]
+
+            },
+
+
+            mundial2026: {
+
+                titulo: "Mundial 2026",
+
+                descripcion:
+                    "Todo lo relacionado con nuestra locura por el fútbol.",
+
+                numero: "03",
+
+                carpeta: "mundial2026",
+
+                archivos: [
+
+                    "c (1).jpeg",
+                    "c (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.09 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.32 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.03 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.03 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.03 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.03 AMaa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.04 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.05 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.05 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.05 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.05 AMaa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.06 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.43.06 AMaa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.20 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.21 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.21 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.21 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.21 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.23 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.28 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.28 AM (1)aa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.28 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.28 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.28 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.29 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.29 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.29 AMaa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.29 AMb.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.29 AMc.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.30 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.30 AM (2).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.30 AM (3).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.30 AM (4).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.30 AM (5).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.30 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.31 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.31 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.31 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.32 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.33 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.33 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 9.17.33 AM.jpeg",
+
+                    "WhatsApp Video 2026-10-06 at 8.42.33 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.43.05 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.13 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.20 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.28 AM.mp4",
+                    "WhatsApp Video 2026-10-06 at 8.44.32 AM.mp4"
+
+                ]
+
+            },
+
+
+            salidas: {
+
+                titulo: "Nuestras salidas",
+
+                descripcion:
+                    "Lugares, días y momentos juntos.",
+
+                numero: "04",
+
+                carpeta: "salidas",
+
+                archivos: [
+
+                    "WhatsApp Image 2026-10-06 at 8.44.33 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.33 AM.jpeg"
+
+                ]
+
+            },
+
+
+            cosasramdom: {
+
+                titulo: "Cosas random",
+
+                descripcion:
+                    "Pequeños momentos que no podían quedarse fuera.",
+
+                numero: "05",
+
+                carpeta: "cosasramdom",
+
+                archivos: [
+
+                    "WhatsApp Image 2026-10-06 at 8.40.09 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.11 AM (1).jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.11 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.51 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.51 AMa.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.40.53 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.08 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.09 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.42.29 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.21 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.22 AM.jpeg",
+                    "WhatsApp Image 2026-10-06 at 8.44.29 AM.jpeg",
+
+                    "WhatsApp Video 2026-10-06 at 8.42.08 AM.mp4"
+
+                ]
+
+            }
+
+        };
+
+
+        /* =====================================================
+           DATOS GUARDADOS
+           ===================================================== */
+
+        const STORAGE_KEY =
+            "mandarino_recuerdos_textos";
+
+
+        let editorCategoria = null;
+
+        let editorArchivo = null;
+
+
+        function obtenerTodosLosTextos() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem(STORAGE_KEY)
+                ) || {};
+
+            } catch (error) {
+
+                return {};
+
+            }
+
+        }
+
+
+        function obtenerTexto(
+            categoria,
+            archivo
+        ) {
+
+            const todos =
+                obtenerTodosLosTextos();
+
+
+            const clave =
+                categoria + "::" + archivo;
+
+
+            if (todos[clave]) {
+
+                return todos[clave];
+
+            }
+
+
+            return {
+
+                titulo: "Momento especial",
+
+                descripcion:
+                    "Un recuerdo para guardar."
+
+            };
+
+        }
+
+
+        function guardarTexto(
+            categoria,
+            archivo,
+            titulo,
+            descripcion
+        ) {
+
+            const todos =
+                obtenerTodosLosTextos();
+
+
+            const clave =
+                categoria + "::" + archivo;
+
+
+            todos[clave] = {
+
+                titulo: titulo,
+
+                descripcion: descripcion
+
+            };
+
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(todos)
+            );
+
+        }
+
+
+        /* =====================================================
+           RUTA
+           ===================================================== */
+
+        function rutaArchivo(
+            carpeta,
+            archivo
+        ) {
+
+            return "fotos/" +
+                carpeta +
+                "/" +
+                encodeURIComponent(archivo)
+                    .replace(/%2F/g, "/");
+
+        }
+
+
+        /* =====================================================
+           CARGAR GALERÍA
+           ===================================================== */
+
+        function cargarGaleria(nombre) {
+
+            const datos =
+                categorias[nombre];
+
+
+            const contenedor =
+                document.getElementById(
+                    "galeria-contenido"
+                );
+
+
+            let html = `
+
+                <section
+                    class="galeria activa"
+                    id="galeria-${nombre}">
+
+                    <div class="titulo-seccion">
+
+                        <span class="numero">
+                            ${datos.numero}
+                        </span>
+
+                        <div>
+
+                            <h2>
+                                ${datos.titulo}
+                            </h2>
+
+                            <p>
+                                ${datos.descripcion}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="galeria-grid">
+
+            `;
+
+
+            datos.archivos.forEach(
+                function(
+                    archivo,
+                    indice
+                ) {
+
+
+                    const ruta =
+                        rutaArchivo(
+                            datos.carpeta,
+                            archivo
+                        );
+
+
+                    const esVideo =
+                        archivo
+                            .toLowerCase()
+                            .endsWith(".mp4");
+
+
+                    const texto =
+                        obtenerTexto(
+                            nombre,
+                            archivo
+                        );
+
+
+                    const tituloSeguro =
+                        escaparHTML(
+                            texto.titulo
+                        );
+
+
+                    const descripcionSegura =
+                        escaparHTML(
+                            texto.descripcion
+                        );
+
+
+                    if (esVideo) {
+
+                        html += `
+
+                            <article
+                                class="foto-card"
+                                data-categoria="${nombre}"
+                                data-archivo="${escaparHTML(archivo)}">
+
+
+                                <div
+                                    class="foto video-card"
+                                    onclick="abrirVideo('${escaparJS(ruta)}')">
+
+
+                                    <video
+                                        src="${ruta}"
+                                        muted
+                                        loop
+                                        playsinline
+                                        preload="metadata"
+                                        onmouseenter="this.play()"
+                                        onmouseleave="this.pause()">
+                                    </video>
+
+
+                                    <div class="brillo"></div>
+
+
+                                    <div class="ver">
+
+                                        <span>▶</span>
+
+                                        Ver video
+
+                                    </div>
+
+
+                                    <div class="etiqueta-video">
+                                        VIDEO
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="descripcion">
+
+
+                                    <div class="descripcion-contenido">
+
+                                        <h3 class="tarjeta-titulo">
+                                            ${tituloSeguro}
+                                        </h3>
+
+
+                                        <p class="tarjeta-descripcion">
+                                            ${descripcionSegura}
+                                        </p>
+
+                                    </div>
+
+
+                                    <button
+                                        class="boton-editar"
+                                        onclick="abrirEditor(event, '${escaparJS(nombre)}', '${escaparJS(archivo)}')">
+
+                                        ✏️ Editar
+
+                                    </button>
+
+
+                                </div>
+
+
+                            </article>
+
+                        `;
+
+                    } else {
+
+                        html += `
+
+                            <article
+                                class="foto-card"
+                                data-categoria="${nombre}"
+                                data-archivo="${escaparHTML(archivo)}">
+
+
+                                <div
+                                    class="foto"
+                                    onclick="abrirFoto('${escaparJS(ruta)}')">
+
+
+                                    <img
+                                        src="${ruta}"
+                                        alt="${tituloSeguro}"
+                                        loading="lazy">
+
+
+                                    <div class="brillo"></div>
+
+
+                                    <div class="ver">
+
+                                        <span>+</span>
+
+                                        Ver foto
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="descripcion">
+
+
+                                    <div class="descripcion-contenido">
+
+                                        <h3 class="tarjeta-titulo">
+                                            ${tituloSeguro}
+                                        </h3>
+
+
+                                        <p class="tarjeta-descripcion">
+                                            ${descripcionSegura}
+                                        </p>
+
+                                    </div>
+
+
+                                    <button
+                                        class="boton-editar"
+                                        onclick="abrirEditor(event, '${escaparJS(nombre)}', '${escaparJS(archivo)}')">
+
+                                        ✏️ Editar
+
+                                    </button>
+
+
+                                </div>
+
+
+                            </article>
+
+                        `;
+
+                    }
+
+                }
+            );
+
+
+            html += `
+
+                    </div>
+
+                </section>
+
+            `;
+
+
+            contenedor.innerHTML =
+                html;
+
+        }
+
+
+        /* =====================================================
+           ESCAPAR HTML
+           ===================================================== */
+
+        function escaparHTML(texto) {
+
+            return String(texto)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* =====================================================
+           ESCAPAR JAVASCRIPT
+           ===================================================== */
+
+        function escaparJS(texto) {
+
+            return String(texto)
+                .replace(/\\/g, "\\\\")
+                .replace(/'/g, "\\'")
+                .replace(/"/g, '\\"')
+                .replace(/\r/g, "\\r")
+                .replace(/\n/g, "\\n");
+
+        }
+
+
+        /* =====================================================
+           CAMBIAR CATEGORÍA
+           ===================================================== */
+
+        function mostrarCategoria(
+            nombre,
+            boton
+        ) {
+
+            cargarGaleria(nombre);
+
+
+            document
+                .querySelectorAll(".categoria")
+                .forEach(
+                    function(btn) {
+
+                        btn.classList.remove(
+                            "activa"
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".dashboard-menu button"
+                )
+                .forEach(
+                    function(btn) {
+
+                        btn.classList.remove(
+                            "activo"
+                        );
+
+                    }
+                );
+
+
+            if (boton) {
+
+                boton.classList.add(
+                    "activa"
+                );
+
+                boton.classList.add(
+                    "activo"
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           ABRIR EDITOR
+           ===================================================== */
+
+        function abrirEditor(
+            event,
+            categoria,
+            archivo
+        ) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+
+            editorCategoria =
+                categoria;
+
+
+            editorArchivo =
+                archivo;
+
+
+            const texto =
+                obtenerTexto(
+                    categoria,
+                    archivo
+                );
+
+
+            document.getElementById(
+                "editorTitulo"
+            ).value =
+                texto.titulo;
+
+
+            document.getElementById(
+                "editorDescripcion"
+            ).value =
+                texto.descripcion;
+
+
+            const datos =
+                categorias[categoria];
+
+
+            const ruta =
+                rutaArchivo(
+                    datos.carpeta,
+                    archivo
+                );
+
+
+            const preview =
+                document.getElementById(
+                    "editorPreview"
+                );
+
+
+            const esVideo =
+                archivo
+                    .toLowerCase()
+                    .endsWith(".mp4");
+
+
+            if (esVideo) {
+
+                preview.innerHTML = `
+
+                    <video
+                        src="${ruta}"
+                        controls
+                        autoplay
+                        muted>
+                    </video>
+
+                `;
+
+            } else {
+
+                preview.innerHTML = `
+
+                    <img
+                        src="${ruta}"
+                        alt="Vista previa">
+
+                `;
+
+            }
+
+
+            document
+                .getElementById(
+                    "editorOverlay"
+                )
+                .classList.add(
+                    "mostrar"
+                );
+
+
+            document.body.classList.add(
+                "sin-scroll"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    document
+                        .getElementById(
+                            "editorTitulo"
+                        )
+                        .focus();
+
+                },
+                100
+            );
+
+        }
+
+
+        /* =====================================================
+           GUARDAR EDICIÓN
+           ===================================================== */
+
+        function guardarEdicion() {
+
+            if (
+                !editorCategoria ||
+                !editorArchivo
+            ) {
+
+                return;
+
+            }
+
+
+            let titulo =
+                document
+                    .getElementById(
+                        "editorTitulo"
+                    )
+                    .value
+                    .trim();
+
+
+            let descripcion =
+                document
+                    .getElementById(
+                        "editorDescripcion"
+                    )
+                    .value
+                    .trim();
+
+
+            if (!titulo) {
+
+                titulo =
+                    "Momento especial";
+
+            }
+
+
+            if (!descripcion) {
+
+                descripcion =
+                    "Un recuerdo para guardar.";
+
+            }
+
+
+            guardarTexto(
+                editorCategoria,
+                editorArchivo,
+                titulo,
+                descripcion
+            );
+
+
+            cerrarEditor();
+
+
+            /* Recargar la categoría */
+
+            cargarGaleria(
+                editorCategoria
+            );
+
+
+            mostrarAvisoGuardado();
+
+        }
+
+
+        /* =====================================================
+           CERRAR EDITOR
+           ===================================================== */
+
+        function cerrarEditor() {
+
+            const overlay =
+                document.getElementById(
+                    "editorOverlay"
+                );
+
+
+            overlay.classList.remove(
+                "mostrar"
+            );
+
+
+            document.body.classList.remove(
+                "sin-scroll"
+            );
+
+
+            document.getElementById(
+                "editorPreview"
+            ).innerHTML = "";
+
+
+            editorCategoria = null;
+
+            editorArchivo = null;
+
+        }
+
+
+        /* =====================================================
+           AVISO
+           ===================================================== */
+
+        function mostrarAvisoGuardado() {
+
+            const aviso =
+                document.getElementById(
+                    "editorGuardado"
+                );
+
+
+            aviso.classList.add(
+                "mostrar"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    aviso.classList.remove(
+                        "mostrar"
+                    );
+
+                },
+                1800
+            );
+
+        }
+
+
+        /* =====================================================
+           ABRIR FOTO
+           ===================================================== */
+
+        function abrirFoto(ruta) {
+
+            const visor =
+                document.getElementById(
+                    "visor"
+                );
+
+
+            const imagen =
+                document.getElementById(
+                    "imagenGrande"
+                );
+
+
+            const video =
+                document.getElementById(
+                    "videoGrande"
+                );
+
+
+            imagen.style.display =
+                "block";
+
+
+            video.style.display =
+                "none";
+
+
+            video.pause();
+
+            video.src = "";
+
+
+            imagen.src =
+                ruta;
+
+
+            visor.classList.add(
+                "mostrar"
+            );
+
+
+            document.body.classList.add(
+                "sin-scroll"
+            );
+
+        }
+
+
+        /* =====================================================
+           ABRIR VIDEO
+           ===================================================== */
+
+        function abrirVideo(ruta) {
+
+            const visor =
+                document.getElementById(
+                    "visor"
+                );
+
+
+            const imagen =
+                document.getElementById(
+                    "imagenGrande"
+                );
+
+
+            const video =
+                document.getElementById(
+                    "videoGrande"
+                );
+
+
+            imagen.style.display =
+                "none";
+
+
+            imagen.src = "";
+
+
+            video.style.display =
+                "block";
+
+
+            video.src =
+                ruta;
+
+
+            video.currentTime = 0;
+
+
+            visor.classList.add(
+                "mostrar"
+            );
+
+
+            document.body.classList.add(
+                "sin-scroll"
+            );
+
+
+            video.play().catch(
+                function() {}
+            );
+
+        }
+
+
+        /* =====================================================
+           CERRAR FOTO
+           ===================================================== */
+
+        function cerrarFoto() {
+
+            const visor =
+                document.getElementById(
+                    "visor"
+                );
+
+
+            const imagen =
+                document.getElementById(
+                    "imagenGrande"
+                );
+
+
+            const video =
+                document.getElementById(
+                    "videoGrande"
+                );
+
+
+            visor.classList.remove(
+                "mostrar"
+            );
+
+
+            imagen.src = "";
+
+
+            video.pause();
+
+            video.src = "";
+
+
+            document.body.classList.remove(
+                "sin-scroll"
+            );
+
+        }
+
+
+        /* =====================================================
+           CERRAR EDITOR CON ESCAPE
+           ===================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    const editor =
+                        document.getElementById(
+                            "editorOverlay"
+                        );
+
+
+                    if (
+                        editor.classList.contains(
+                            "mostrar"
+                        )
+                    ) {
+
+                        cerrarEditor();
+
+                        return;
+
+                    }
+
+
+                    cerrarFoto();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           CERRAR EDITOR AL HACER CLICK FUERA
+           ===================================================== */
+
+        document
+            .getElementById(
+                "editorOverlay"
+            )
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        cerrarEditor();
+
+                    }
+
+                }
+            );
+
+
+        /* =====================================================
+           CERRAR VISOR AL HACER CLICK FUERA
+           ===================================================== */
+
+        document
+            .getElementById(
+                "visor"
+            )
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        cerrarFoto();
+
+                    }
+
+                }
+            );
+
+
+        /* =====================================================
+           MOUSE SOBRE TARJETAS
+           ===================================================== */
+
+        document.addEventListener(
+            "mousemove",
+            function(event) {
+
+                const tarjeta =
+                    event.target.closest(
+                        ".foto-card"
+                    );
+
+
+                if (!tarjeta) {
+                    return;
+                }
+
+
+                const rect =
+                    tarjeta.getBoundingClientRect();
+
+
+                tarjeta.style.setProperty(
+                    "--mouse-x",
+                    (event.clientX - rect.left) + "px"
+                );
+
+
+                tarjeta.style.setProperty(
+                    "--mouse-y",
+                    (event.clientY - rect.top) + "px"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           CARGAR AL INICIAR
+           ===================================================== */
+
+        cargarGaleria(
+            "juegos"
+        );
+
+
+    </script>
+
+</body>
+</html>

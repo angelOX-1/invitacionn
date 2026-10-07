@@ -1,0 +1,1764 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #210c14 0%,
+            #0d080a 35%,
+            #050505 75%
+        );
+
+    color: #ddd;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+body.sin-scroll {
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   FONDO
+========================================== */
+
+.fondo {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+
+.fondo::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    top: -250px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(115, 18, 45, .18),
+            transparent 70%
+        );
+
+    filter: blur(30px);
+}
+
+
+.particula {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #7c1c36;
+
+    opacity: .35;
+
+    animation:
+        flotar 8s infinite ease-in-out;
+}
+
+
+.p1 {
+    left: 8%;
+    top: 25%;
+}
+
+
+.p2 {
+    left: 18%;
+    top: 70%;
+    animation-delay: 1s;
+}
+
+
+.p3 {
+    left: 35%;
+    top: 40%;
+    animation-delay: 2s;
+}
+
+
+.p4 {
+    left: 50%;
+    top: 80%;
+    animation-delay: 3s;
+}
+
+
+.p5 {
+    left: 65%;
+    top: 30%;
+    animation-delay: 1.5s;
+}
+
+
+.p6 {
+    left: 78%;
+    top: 65%;
+    animation-delay: 2.5s;
+}
+
+
+.p7 {
+    left: 88%;
+    top: 20%;
+    animation-delay: 4s;
+}
+
+
+.p8 {
+    left: 95%;
+    top: 80%;
+    animation-delay: 5s;
+}
+
+
+@keyframes flotar {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity: .2;
+    }
+
+    50% {
+        transform:
+            translateY(-30px)
+            scale(1.5);
+
+        opacity: .6;
+    }
+}
+
+
+/* ==========================================
+   CORAZONES
+========================================== */
+
+#corazones {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+
+.corazon-flotante {
+    position: absolute;
+
+    bottom: -30px;
+
+    color: #7d1d35;
+
+    opacity: .18;
+
+    animation:
+        subirCorazon
+        linear
+        forwards;
+}
+
+
+@keyframes subirCorazon {
+
+    from {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: .2;
+    }
+
+    90% {
+        opacity: .12;
+    }
+
+    to {
+        transform:
+            translateY(-110vh)
+            rotate(25deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+.dashboard {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding:
+        10px 5%;
+
+    background:
+        rgba(7, 5, 6, .96);
+
+    border-bottom:
+        1px solid
+        rgba(120, 24, 47, .35);
+
+    box-shadow:
+        0 8px 30px
+        rgba(0,0,0,.45);
+
+    backdrop-filter:
+        blur(14px);
+}
+
+
+.dashboard-logo {
+    color: #a52547;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    transition: .3s ease;
+}
+
+
+.dashboard-logo:hover {
+    color: #d33a62;
+
+    transform:
+        scale(1.03);
+}
+
+
+.dashboard-menu {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    flex-wrap: wrap;
+}
+
+
+.dashboard-menu a,
+.dashboard-menu button {
+    border: 0;
+
+    background: transparent;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    padding:
+        8px 11px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    transition:
+        .3s ease;
+}
+
+
+.dashboard-menu a:hover,
+.dashboard-menu button:hover,
+.dashboard-menu button.activo {
+    color: #fff;
+
+    background:
+        rgba(120, 24, 47, .25);
+}
+
+
+.dashboard-boton {
+    color: #ddd;
+
+    text-decoration: none;
+
+    font-size: 9px;
+
+    padding:
+        8px 14px;
+
+    border:
+        1px solid
+        #581326;
+
+    border-radius: 20px;
+
+    background:
+        rgba(70, 12, 27, .5);
+
+    white-space: nowrap;
+
+    transition: .3s ease;
+}
+
+
+.dashboard-boton:hover {
+    background: #74172e;
+
+    border-color: #8d1d38;
+
+    color: white;
+}
+
+
+/* ==========================================
+   ENCABEZADO ORIGINAL
+========================================== */
+
+.header {
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    padding:
+        65px 20px 25px;
+}
+
+
+.logo-corazon {
+    width: 42px;
+    height: 42px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid
+        #68172d;
+
+    border-radius: 50%;
+
+    color: #a52446;
+
+    font-size: 18px;
+
+    box-shadow:
+        0 0 25px
+        rgba(120, 24, 47, .15);
+}
+
+
+.linea {
+    width: 35px;
+
+    height: 1px;
+
+    margin:
+        0 auto 14px;
+
+    background:
+        #6c1930;
+}
+
+
+.pequeno {
+    color: #7e1b32;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 12px;
+}
+
+
+.header h1 {
+    color: #ddd;
+
+    font-size: 45px;
+
+    font-weight: 300;
+
+    line-height: 1.1;
+}
+
+
+.header h1 span {
+    display: block;
+
+    color: #8d203a;
+
+    font-weight: 700;
+}
+
+
+.subtitulo {
+    max-width: 500px;
+
+    margin:
+        15px auto 0;
+
+    color: #6c676b;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+}
+
+
+.separador {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 22px;
+
+    color: #7c1c36;
+
+    font-size: 11px;
+}
+
+
+.separador span {
+    width: 55px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            #641629
+        );
+}
+
+
+.separador span:last-child {
+    background:
+        linear-gradient(
+            to left,
+            transparent,
+            #641629
+        );
+}
+
+
+/* ==========================================
+   CATEGORÍAS
+========================================== */
+
+.categorias {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    margin:
+        5px auto
+        45px;
+
+    padding:
+        0 20px;
+}
+
+
+.categoria {
+    position: relative;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        #291016;
+
+    background:
+        rgba(14, 7, 10, .85);
+
+    color: #777;
+
+    padding:
+        10px 16px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        .35s ease;
+
+    backdrop-filter:
+        blur(8px);
+}
+
+
+.categoria span {
+    margin-right: 5px;
+}
+
+
+.categoria:hover {
+    color: #ddd;
+
+    border-color: #641629;
+
+    transform:
+        translateY(-2px);
+}
+
+
+.categoria.activa {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #74172e,
+            #4b0e1d
+        );
+
+    border-color: #8d1d38;
+
+    box-shadow:
+        0 8px 25px
+        rgba(105, 17, 40, .22);
+}
+
+
+/* ==========================================
+   CONTENEDOR
+========================================== */
+
+.contenedor {
+    position: relative;
+
+    z-index: 2;
+
+    width:
+        min(
+            1050px,
+            90%
+        );
+
+    margin: auto;
+}
+
+
+/* ==========================================
+   TÍTULO
+========================================== */
+
+.titulo-seccion {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+
+.numero {
+    color: #7e1b32;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    padding-right: 15px;
+
+    border-right:
+        1px solid
+        #32121b;
+}
+
+
+.titulo-seccion h2 {
+    color: #ddd;
+
+    font-size: 16px;
+
+    margin-bottom: 4px;
+}
+
+
+.titulo-seccion p {
+    color: #686268;
+
+    font-size: 10px;
+}
+
+
+/* ==========================================
+   GRID 3 COLUMNAS
+========================================== */
+
+.galeria-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 17px;
+}
+
+
+.galeria {
+    animation:
+        aparecerGaleria
+        .55s ease;
+}
+
+
+@keyframes aparecerGaleria {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* ==========================================
+   TARJETAS
+========================================== */
+
+.foto-card {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.38);
+
+    transform:
+        translateY(35px);
+
+    opacity: 0;
+
+    animation:
+        tarjetaEntrada
+        .7s
+        cubic-bezier(.2,.8,.2,1)
+        forwards;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+}
+
+
+.foto-card:nth-child(1) {
+    animation-delay: .03s;
+}
+
+.foto-card:nth-child(2) {
+    animation-delay: .06s;
+}
+
+.foto-card:nth-child(3) {
+    animation-delay: .09s;
+}
+
+.foto-card:nth-child(4) {
+    animation-delay: .12s;
+}
+
+
+@keyframes tarjetaEntrada {
+
+    to {
+        transform:
+            translateY(0);
+
+        opacity: 1;
+    }
+}
+
+
+.foto-card::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background:
+        radial-gradient(
+            250px circle at
+            var(--mouse-x)
+            var(--mouse-y),
+            rgba(145,25,55,.16),
+            transparent 60%
+        );
+
+    transition:
+        opacity .3s;
+
+    z-index: 5;
+}
+
+
+.foto-card:hover::after {
+    opacity: 1;
+}
+
+
+.foto-card:hover {
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,.55),
+        0 0 25px
+        rgba(110,20,42,.10);
+}
+
+
+/* ==========================================
+   FOTO / VIDEO
+========================================== */
+
+.foto {
+    position: relative;
+
+    height: 310px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    background: #111;
+}
+
+
+.foto img,
+.foto video {
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform .8s
+        cubic-bezier(.2,.8,.2,1),
+        filter .5s;
+}
+
+
+.foto-card:hover .foto img,
+.foto-card:hover .foto video {
+    transform:
+        scale(1.08);
+
+    filter:
+        brightness(.72);
+}
+
+
+/* ==========================================
+   BRILLO
+========================================== */
+
+.brillo {
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            100deg,
+            transparent,
+            rgba(255,255,255,.20),
+            transparent
+        );
+
+    transform:
+        skewX(-20deg);
+
+    transition:
+        left .8s ease;
+
+    pointer-events: none;
+}
+
+
+.foto-card:hover .brillo {
+    left: 140%;
+}
+
+
+/* ==========================================
+   BOTÓN VER
+========================================== */
+
+.ver {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -35%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: white;
+
+    font-size: 10px;
+
+    opacity: 0;
+
+    transition:
+        .35s ease;
+
+    z-index: 8;
+
+    text-shadow:
+        0 2px 8px black;
+}
+
+
+.ver span {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.6);
+
+    border-radius: 50%;
+
+    font-size: 15px;
+}
+
+
+.foto-card:hover .ver {
+    opacity: 1;
+
+    transform:
+        translate(-50%, -50%);
+}
+
+
+/* ==========================================
+   ETIQUETA VIDEO
+========================================== */
+
+.etiqueta-video {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    z-index: 10;
+
+    padding:
+        5px 8px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(80,8,25,.85);
+
+    color: #fff;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   DESCRIPCIÓN
+========================================== */
+
+.descripcion {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    min-height: 67px;
+
+    padding:
+        12px 14px;
+
+    background: white;
+}
+
+
+.descripcion h3 {
+    color: #171317;
+
+    font-size: 11px;
+
+    margin-bottom: 5px;
+}
+
+
+.descripcion p {
+    color: #888;
+
+    font-size: 9px;
+}
+
+
+.mini-corazon {
+    color: #8b2038;
+
+    font-size: 13px;
+
+    transition:
+        transform .3s ease;
+}
+
+
+.foto-card:hover .mini-corazon {
+    transform:
+        scale(1.3);
+
+    animation:
+        latido .8s infinite;
+}
+
+
+@keyframes latido {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+
+/* ==========================================
+   VISOR
+========================================== */
+
+.visor {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        rgba(2,2,3,.96);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        .35s ease;
+
+    backdrop-filter:
+        blur(10px);
+}
+
+
+.visor.mostrar {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+.visor-contenido {
+    text-align: center;
+
+    width:
+        min(90vw, 1000px);
+
+    transform:
+        scale(.85)
+        translateY(20px);
+
+    opacity: 0;
+
+    transition:
+        .45s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+
+.visor.mostrar
+.visor-contenido {
+    transform:
+        scale(1)
+        translateY(0);
+
+    opacity: 1;
+}
+
+
+.visor img,
+.visor video {
+    display: block;
+
+    width: auto;
+
+    max-width: 90vw;
+
+    max-height: 78vh;
+
+    margin: auto;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 20px 80px
+        rgba(0,0,0,.8);
+}
+
+
+.visor video {
+    background: #000;
+}
+
+
+.visor-linea {
+    width: 35px;
+
+    height: 1px;
+
+    margin:
+        15px auto 8px;
+
+    background: #78182f;
+}
+
+
+.visor p {
+    color: #777;
+
+    font-size: 10px;
+}
+
+
+.cerrar {
+    position: fixed;
+
+    top: 25px;
+    right: 30px;
+
+    width: 43px;
+    height: 43px;
+
+    border:
+        1px solid
+        #501020;
+
+    border-radius: 50%;
+
+    background:
+        rgba(40,8,16,.8);
+
+    color: #ddd;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition:
+        .3s ease;
+
+    z-index: 10000;
+}
+
+
+.cerrar:hover {
+    background: #78182f;
+
+    color: white;
+
+    transform:
+        rotate(90deg)
+        scale(1.08);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .dashboard {
+        padding:
+            10px 3%;
+    }
+
+
+    .dashboard-menu {
+        gap: 1px;
+    }
+
+
+    .dashboard-menu a,
+    .dashboard-menu button {
+        padding:
+            7px 7px;
+
+        font-size: 9px;
+    }
+
+
+    .contenedor {
+        width: 92%;
+    }
+
+
+    .galeria-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .foto {
+        height: 290px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard {
+        position: relative;
+
+        flex-direction: column;
+
+        padding:
+            12px 10px;
+
+        gap: 8px;
+    }
+
+
+    .dashboard-logo {
+        font-size: 16px;
+    }
+
+
+    .dashboard-menu {
+        width: 100%;
+
+        gap: 3px;
+    }
+
+
+    .dashboard-menu a,
+    .dashboard-menu button {
+        padding:
+            7px 6px;
+
+        font-size: 8px;
+    }
+
+
+    .dashboard-boton {
+        display: none;
+    }
+
+
+    .header {
+        padding-top: 45px;
+    }
+
+
+    .header h1 {
+        font-size: 40px;
+    }
+
+
+    .categorias {
+        margin-bottom: 35px;
+    }
+
+
+    .categoria {
+        padding:
+            9px 11px;
+
+        font-size: 9px;
+    }
+
+
+    .contenedor {
+        width: 90%;
+    }
+
+
+    .galeria-grid {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+
+    .foto {
+        height: 390px;
+    }
+
+
+    .titulo-seccion {
+        margin-bottom: 17px;
+    }
+
+
+    .titulo-seccion h2 {
+        font-size: 14px;
+    }
+
+
+    .visor img,
+    .visor video {
+        max-width: 94vw;
+
+        max-height: 75vh;
+    }
+
+
+    .cerrar {
+        top: 15px;
+
+        right: 15px;
+    }
+
+}
+
+/* =========================================================
+   TORRES RITUALES CON FUEGO
+   2 TORRES A CADA LADO
+   ========================================================= */
+
+.ritual-fondo {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    z-index: 0;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   POSICIONES
+   ========================================================= */
+
+.torre-ritual {
+    position: absolute;
+
+    bottom: 15px;
+
+    width: 85px;
+    height: 230px;
+
+    opacity: .85;
+
+    filter:
+        drop-shadow(0 0 12px rgba(100, 0, 20, .55));
+}
+
+
+/* IZQUIERDA */
+
+.torre-1 {
+    left: 35px;
+    transform: scale(.95);
+}
+
+.torre-2 {
+    left: 145px;
+    transform: scale(.72);
+}
+
+
+/* DERECHA */
+
+.torre-3 {
+    right: 35px;
+    transform: scale(.95);
+}
+
+.torre-4 {
+    right: 145px;
+    transform: scale(.72);
+}
+
+
+/* =========================================================
+   CUERPO DE LA TORRE
+   ========================================================= */
+
+.torre-cuerpo {
+    position: absolute;
+
+    left: 12px;
+    bottom: 0;
+
+    width: 61px;
+    height: 155px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #050204,
+            #17070d 45%,
+            #050204
+        );
+
+    border: 1px solid rgba(130, 25, 45, .45);
+
+    clip-path: polygon(
+        8% 0,
+        92% 0,
+        100% 100%,
+        0 100%
+    );
+
+    box-shadow:
+        inset 0 0 20px rgba(120, 0, 25, .3);
+}
+
+
+/* =========================================================
+   TECHO
+   ========================================================= */
+
+.torre-punta {
+    position: absolute;
+
+    left: 5px;
+    bottom: 150px;
+
+    width: 75px;
+    height: 75px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #050204,
+            #260912,
+            #050204
+        );
+
+    clip-path: polygon(
+        50% 0,
+        100% 100%,
+        0 100%
+    );
+
+    filter:
+        drop-shadow(0 0 8px rgba(120, 0, 25, .4));
+}
+
+
+/* =========================================================
+   PUERTA
+   ========================================================= */
+
+.torre-puerta {
+    position: absolute;
+
+    left: 20px;
+    bottom: 0;
+
+    width: 43px;
+    height: 65px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #020103,
+            #12050a,
+            #020103
+        );
+
+    border: 1px solid rgba(130, 30, 50, .45);
+
+    border-radius: 24px 24px 0 0;
+
+    box-shadow:
+        0 0 15px rgba(110, 0, 20, .3);
+}
+
+
+/* =========================================================
+   VENTANA
+   ========================================================= */
+
+.torre-ventana {
+    position: absolute;
+
+    left: 27px;
+    top: 48px;
+
+    width: 27px;
+    height: 38px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(150, 25, 45, .7),
+            rgba(30, 4, 10, .9) 70%
+        );
+
+    border: 1px solid rgba(150, 30, 50, .55);
+
+    border-radius: 50% 50% 4px 4px;
+
+    box-shadow:
+        0 0 12px rgba(130, 0, 25, .35);
+}
+
+
+/* =========================================================
+   ANTORCHA
+   ========================================================= */
+
+.torre-ritual::before {
+    content: "";
+
+    position: absolute;
+
+    width: 9px;
+    height: 55px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #16070a,
+            #4b171c,
+            #16070a
+        );
+
+    border-radius: 3px;
+
+    z-index: 5;
+
+    bottom: 170px;
+    left: 38px;
+
+    box-shadow:
+        0 0 5px rgba(80, 0, 10, .7);
+}
+
+
+/* =========================================================
+   FUEGO
+   ========================================================= */
+
+.torre-ritual::after {
+    content: "";
+
+    position: absolute;
+
+    width: 27px;
+    height: 40px;
+
+    left: 29px;
+    bottom: 215px;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 75%,
+            #ffb000 0%,
+            #ff5a00 35%,
+            #b50018 65%,
+            transparent 72%
+        );
+
+    clip-path: polygon(
+        50% 0,
+        72% 27%,
+        65% 45%,
+        90% 65%,
+        72% 100%,
+        30% 92%,
+        10% 65%,
+        35% 48%,
+        28% 25%
+    );
+
+    filter:
+        drop-shadow(0 0 8px rgba(255, 60, 0, .8))
+        drop-shadow(0 0 18px rgba(180, 0, 20, .5));
+
+    animation:
+        fuego-ritual 1.1s ease-in-out infinite alternate;
+
+    z-index: 10;
+}
+
+
+/* =========================================================
+   ANIMACIÓN DEL FUEGO
+   ========================================================= */
+
+@keyframes fuego-ritual {
+
+    0% {
+        transform:
+            scale(.92)
+            rotate(-3deg);
+
+        filter:
+            drop-shadow(0 0 6px rgba(255, 60, 0, .7))
+            drop-shadow(0 0 13px rgba(180, 0, 20, .4));
+    }
+
+    50% {
+        transform:
+            scale(1.08)
+            rotate(3deg);
+    }
+
+    100% {
+        transform:
+            scale(.96)
+            rotate(-2deg);
+
+        filter:
+            drop-shadow(0 0 10px rgba(255, 80, 0, .9))
+            drop-shadow(0 0 22px rgba(180, 0, 20, .6));
+    }
+}
+
+
+/* =========================================================
+   LUZ DEL FUEGO SOBRE LAS TORRES
+   ========================================================= */
+
+.torre-ritual {
+    animation:
+        luz-fuego 2s ease-in-out infinite alternate;
+}
+
+
+@keyframes luz-fuego {
+
+    from {
+        filter:
+            drop-shadow(0 0 8px rgba(100, 0, 20, .4));
+    }
+
+    to {
+        filter:
+            drop-shadow(0 0 18px rgba(150, 10, 30, .7));
+    }
+
+}
+
+
+/* =========================================================
+   NIEBLA EN LA PARTE INFERIOR
+   ========================================================= */
+
+.ritual-fondo::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 190px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(5, 1, 4, .9),
+            rgba(15, 2, 8, .55),
+            transparent
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .torre-2,
+    .torre-4 {
+        display: none;
+    }
+
+    .torre-1 {
+        left: 15px;
+        transform: scale(.72);
+    }
+
+    .torre-3 {
+        right: 15px;
+        transform: scale(.72);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .torre-1 {
+        left: -5px;
+        transform: scale(.55);
+    }
+
+    .torre-3 {
+        right: -5px;
+        transform: scale(.55);
+    }
+
+}
+

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Invitación al cine</title>
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <div class="particulas-sangre" id="particulasSangre"></div>
+
+    <!-- =====================================================
+         TORRES MALDITAS + ANTORCHAS
+    ====================================================== -->
+
+    <div class="torres-rojas">
+
+        <!-- TORRE IZQUIERDA -->
+        <div class="torre-roja torre-izquierda">
+
+            <div class="torre-cuerpo">
+
+                <div class="ventana ventana-1"></div>
+                <div class="ventana ventana-2"></div>
+
+                <div class="puerta"></div>
+
+                <div class="piedra piedra-1"></div>
+                <div class="piedra piedra-2"></div>
+                <div class="piedra piedra-3"></div>
+                <div class="piedra piedra-4"></div>
+
+            </div>
+
+            <div class="torre-techo">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+            <div class="torre-base"></div>
+
+            <div class="antorcha">
+
+                <div class="llama"></div>
+
+            </div>
+
+            <div class="torre-luz"></div>
+
+        </div>
+
+
+        <!-- TORRE DERECHA -->
+        <div class="torre-roja torre-derecha">
+
+            <div class="torre-cuerpo">
+
+                <div class="ventana ventana-1"></div>
+                <div class="ventana ventana-2"></div>
+
+                <div class="puerta"></div>
+
+                <div class="piedra piedra-1"></div>
+                <div class="piedra piedra-2"></div>
+                <div class="piedra piedra-3"></div>
+                <div class="piedra piedra-4"></div>
+
+            </div>
+
+            <div class="torre-techo">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+            <div class="torre-base"></div>
+
+            <div class="antorcha">
+
+                <div class="llama"></div>
+
+            </div>
+
+            <div class="torre-luz"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="fondo-decoracion">
+
+        <div class="estrella-fondo estrella-fondo-1"></div>
+        <div class="estrella-fondo estrella-fondo-2"></div>
+        <div class="estrella-fondo estrella-fondo-3"></div>
+        <div class="estrella-fondo estrella-fondo-4"></div>
+
+        <div class="mini-punto punto-1"></div>
+        <div class="mini-punto punto-2"></div>
+        <div class="mini-punto punto-3"></div>
+        <div class="mini-punto punto-4"></div>
+        <div class="mini-punto punto-5"></div>
+        <div class="mini-punto punto-6"></div>
+
+    </div>
+
+
+    <div class="tarjeta" id="tarjeta">
+
+        <div class="borde-superior"></div>
+
+        <div class="decoraciones-neon">
+
+            <div class="patita-neon patita-izquierda">
+                <svg viewBox="0 0 512 512">
+                    <path d="
+                    M256 224
+                    C176 224 64 347 64 424
+                    C64 459 91 480 136 480
+                    C185 480 217 455 256 455
+                    C296 455 328 480 376 480
+                    C421 480 448 459 448 424
+                    C448 347 336 224 256 224Z
+                    M109 211
+                    C99 176 67 153 38 160
+                    C9 167 -6 201 4 236
+                    C14 271 46 294 75 287
+                    C104 280 119 246 109 211Z
+                    M194 191
+                    C225 183 240 141 228 98
+                    C216 55 181 27 150 35
+                    C119 43 104 85 116 128
+                    C128 171 163 199 194 191Z
+                    M403 160
+                    C374 153 342 176 332 211
+                    C322 246 337 280 366 287
+                    C395 294 427 271 437 236
+                    C447 201 432 167 403 160Z
+                    M318 191
+                    C349 199 384 171 396 128
+                    C408 85 393 43 362 35
+                    C331 27 296 55 284 98
+                    C272 141 287 183 318 191Z
+                    " />
+                </svg>
+            </div>
+
+            <div class="patita-neon patita-derecha">
+                <svg viewBox="0 0 512 512">
+                    <path d="
+                    M256 224
+                    C176 224 64 347 64 424
+                    C64 459 91 480 136 480
+                    C185 480 217 455 256 455
+                    C296 455 328 480 376 480
+                    C421 480 448 459 448 424
+                    C448 347 336 224 256 224Z
+                    M109 211
+                    C99 176 67 153 38 160
+                    C9 167 -6 201 4 236
+                    C14 271 46 294 75 287
+                    C104 280 119 246 109 211Z
+                    M194 191
+                    C225 183 240 141 228 98
+                    C216 55 181 27 150 35
+                    C119 43 104 85 116 128
+                    C128 171 163 199 194 191Z
+                    M403 160
+                    C374 153 342 176 332 211
+                    C322 246 337 280 366 287
+                    C395 294 427 271 437 236
+                    C447 201 432 167 403 160Z
+                    M318 191
+                    C349 199 384 171 396 128
+                    C408 85 393 43 362 35
+                    C331 27 296 55 284 98
+                    C272 141 287 183 318 191Z
+                    " />
+                </svg>
+            </div>
+
+            <div class="corazon-neon">
+                <svg viewBox="0 0 100 100">
+                    <path d="
+                    M50 82
+                    C42 73 15 58 15 36
+                    C15 20 34 14 50 30
+                    C66 14 85 20 85 36
+                    C85 58 58 73 50 82Z
+                    " />
+                </svg>
+            </div>
+
+            <div class="estrella-neon estrella-1"></div>
+            <div class="estrella-neon estrella-2"></div>
+            <div class="estrella-neon estrella-3"></div>
+            <div class="estrella-neon estrella-4"></div>
+
+        </div>
+
+
+        <div class="gato-container" id="gatoContainer">
+
+            <div class="aro aro-grande"></div>
+            <div class="aro aro-punteado"></div>
+            <div class="aro aro-interior"></div>
+
+            <span class="particula p1">•</span>
+            <span class="particula p2">•</span>
+            <span class="particula p3">•</span>
+            <span class="particula p4">•</span>
+            <span class="particula p5">•</span>
+            <span class="particula p6">•</span>
+            <span class="particula p7">•</span>
+            <span class="particula p8">•</span>
+            <span class="particula p9">•</span>
+            <span class="particula p10">•</span>
+            <span class="particula p11">•</span>
+            <span class="particula p12">•</span>
+            <span class="particula p13">•</span>
+            <span class="particula p14">•</span>
+            <span class="particula p15">•</span>
+            <span class="particula p16">•</span>
+
+            <div class="gato" id="gato">
+
+                <img
+                    src="mandarino.png"
+                    alt="Mandarino"
+                    class="foto-mandarino"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="invitacion-cinta">
+
+            <div class="mini-patita">
+                <svg viewBox="0 0 512 512">
+                    <path d="
+                    M256 224
+                    C176 224 64 347 64 424
+                    C64 459 91 480 136 480
+                    C185 480 217 455 256 455
+                    C296 455 328 480 376 480
+                    C421 480 448 459 448 424
+                    C448 347 336 224 256 224Z
+                    M109 211
+                    C99 176 67 153 38 160
+                    C9 167 -6 201 4 236
+                    C14 271 46 294 75 287
+                    C104 280 119 246 109 211Z
+                    M194 191
+                    C225 183 240 141 228 98
+                    C216 55 181 27 150 35
+                    C119 43 104 85 116 128
+                    C128 171 163 199 194 191Z
+                    M403 160
+                    C374 153 342 176 332 211
+                    C322 246 337 280 366 287
+                    C395 294 427 271 437 236
+                    C447 201 432 167 403 160Z
+                    M318 191
+                    C349 199 384 171 396 128
+                    C408 85 393 43 362 35
+                    C331 27 296 55 284 98
+                    C272 141 287 183 318 191Z
+                    " />
+                </svg>
+            </div>
+
+            <p class="invitacion-texto">
+                MANDARINO TE ESTÁ INVITANDO
+            </p>
+
+            <div class="mini-patita">
+                <svg viewBox="0 0 512 512">
+                    <path d="
+                    M256 224
+                    C176 224 64 347 64 424
+                    C64 459 91 480 136 480
+                    C185 480 217 455 256 455
+                    C296 455 328 480 376 480
+                    C421 480 448 459 448 424
+                    C448 347 336 224 256 224Z
+                    M109 211
+                    C99 176 67 153 38 160
+                    C9 167 -6 201 4 236
+                    C14 271 46 294 75 287
+                    C104 280 119 246 109 211Z
+                    M194 191
+                    C225 183 240 141 228 98
+                    C216 55 181 27 150 35
+                    C119 43 104 85 116 128
+                    C128 171 163 199 194 191Z
+                    M403 160
+                    C374 153 342 176 332 211
+                    C322 246 337 280 366 287
+                    C395 294 427 271 437 236
+                    C447 201 432 167 403 160Z
+                    M318 191
+                    C349 199 384 171 396 128
+                    C408 85 393 43 362 35
+                    C331 27 296 55 284 98
+                    C272 141 287 183 318 191Z
+                    " />
+                </svg>
+            </div>
+
+        </div>
+
+
+        <div class="logo">
+            <span>AVENGERS</span>
+            <strong>DOOMSDAY</strong>
+        </div>
+
+
+        <div class="separador">
+            <span>🐾</span>
+        </div>
+
+
+        <p class="descripcion">
+            Mandarino te está invitando cordialmente
+            <br>
+            a acompañarlo al cine.
+        </p>
+
+
+        <div class="datos">
+
+            <div class="dato">
+
+                <div class="icono-svg">
+                    <svg viewBox="0 0 64 64">
+                        <rect x="9" y="13" width="46" height="43" rx="5"/>
+                        <line x1="9" y1="25" x2="55" y2="25"/>
+                        <line x1="20" y1="7" x2="20" y2="18"/>
+                        <line x1="44" y1="7" x2="44" y2="18"/>
+                        <circle cx="20" cy="34" r="1.5"/>
+                        <circle cx="32" cy="34" r="1.5"/>
+                        <circle cx="44" cy="34" r="1.5"/>
+                        <circle cx="20" cy="44" r="1.5"/>
+                        <circle cx="32" cy="44" r="1.5"/>
+                        <circle cx="44" cy="44" r="1.5"/>
+                    </svg>
+                </div>
+
+                <small>FECHA</small>
+                <p>16 DE DICIEMBRE</p>
+
+            </div>
+
+
+            <div class="dato">
+
+                <div class="icono-svg">
+                    <svg viewBox="0 0 64 64">
+                        <path d="
+                        M32 58
+                        C32 58 51 40 51 24
+                        C51 13 43 6 32 6
+                        C21 6 13 13 13 24
+                        C13 40 32 58 32 58Z
+                        " />
+                        <circle cx="32" cy="24" r="7"/>
+                    </svg>
+                </div>
+
+                <small>LUGAR</small>
+                <p>MALLANGAMOS</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="mensaje">
+
+            <div class="decoracion-pregunta">✦</div>
+
+            <p id="pregunta">
+                ¿ESTÁS PREPARADA LESBIANA?
+            </p>
+
+            <span id="submensaje"></span>
+
+            <div class="decoracion-pregunta">✦</div>
+
+        </div>
+
+
+        <div class="botones">
+
+            <button
+                class="acepto"
+                id="acepto"
+                onclick="aceptar()">
+                ✓ ACEPTО
+            </button>
+
+            <button
+                class="no-quiero"
+                id="noQuiero"
+                onclick="rechazar()">
+                ✕ NO QUIERO
+            </button>
+
+        </div>
+
+
+        <div class="firma">
+
+            <span></span>
+
+            M A N D A R I N O
+
+            <span></span>
+
+        </div>
+
+
+        <div class="patita-final">
+
+            <svg viewBox="0 0 512 512">
+                <path d="
+                M256 224
+                C176 224 64 347 64 424
+                C64 459 91 480 136 480
+                C185 480 217 455 256 455
+                C296 455 328 480 376 480
+                C421 480 448 459 448 424
+                C448 347 336 224 256 224Z
+                M109 211
+                C99 176 67 153 38 160
+                C9 167 -6 201 4 236
+                C14 271 46 294 75 287
+                C104 280 119 246 109 211Z
+                M194 191
+                C225 183 240 141 228 98
+                C216 55 181 27 150 35
+                C119 43 104 85 116 128
+                C128 171 163 199 194 191Z
+                M403 160
+                C374 153 342 176 332 211
+                C322 246 337 280 366 287
+                C395 294 427 271 437 236
+                C447 201 432 167 403 160Z
+                M318 191
+                C349 199 384 171 396 128
+                C408 85 393 43 362 35
+                C331 27 296 55 284 98
+                C272 141 287 183 318 191Z
+                " />
+            </svg>
+
+        </div>
+
+
+        <div class="arañazos" id="arañazos">
+
+            <div class="garra g1"></div>
+            <div class="garra g2"></div>
+            <div class="garra g3"></div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let intentos = 0;
+
+        const mensajes = [
+            "ACEPTA LESBIANA",
+            "VAMOS, SÉ QUE QUIERES",
+            "DALE QUE SÍ",
+            "ACEPTA ALEEEE",
+            "RENEGONA",
+            "BOXEADORA",
+            "GOLPEADORA",
+            "PELUDА",
+            "DALE",
+            "QUE",
+            "SIIII",
+            "Y TE DEJO PEGARME",
+            "ME PATEAS EN EL PILÍN",
+            "TE DOY A MANDARINO",
+            "TE ODIO",
+            "TE ODIOOOOOO",
+            "YA NO CLICKES NADA",
+            "YA SÁLTE DE LA PÁGINA",
+            "VETE",
+            "YA..."
+        ];
+
+        const submensajes = Array(mensajes.length).fill("");
+
+        const botones = [
+            "✕ NO QUIERO"
+        ];
+
+
+        function rechazar() {
+
+            intentos++;
+
+            const tarjeta =
+                document.getElementById("tarjeta");
+
+            const boton =
+                document.getElementById("noQuiero");
+
+            const pregunta =
+                document.getElementById("pregunta");
+
+            const submensaje =
+                document.getElementById("submensaje");
+
+            const aceptar =
+                document.getElementById("acepto");
+
+            const gato =
+                document.getElementById("gato");
+
+            let indice =
+                Math.min(
+                    intentos,
+                    mensajes.length - 1
+                );
+
+            pregunta.textContent =
+                mensajes[indice];
+
+            submensaje.textContent =
+                submensajes[indice];
+
+            boton.textContent = "✕ NO QUIERO";
+
+            gato.classList.remove(
+                "triste",
+                "sorprendido",
+                "molesto",
+                "enojado",
+                "furioso",
+                "ataque",
+                "acercarse"
+            );
+
+
+            if (intentos === 1) {
+                gato.classList.add("triste");
+            }
+
+            else if (intentos === 2) {
+                gato.classList.add("sorprendido");
+            }
+
+            else if (intentos === 3) {
+                gato.classList.add("molesto");
+            }
+
+            else if (
+                intentos >= 4 &&
+                intentos <= 5
+            ) {
+                gato.classList.add("enojado");
+            }
+
+            else if (
+                intentos >= 6 &&
+                intentos < 10
+            ) {
+                gato.classList.add("furioso");
+            }
+
+
+            if (intentos === 6) {
+
+                tarjeta.classList.add("rojo");
+
+                document.body.classList.add(
+                    "ambiente-rojo"
+                );
+
+                aceptar.classList.add(
+                    "grande"
+                );
+
+                iniciarParticulasSangre();
+
+            }
+
+
+            if (false) {
+                aceptar.textContent =
+                    "✓ ACEPTA LESBIANA";
+            }
+
+
+            if (false) {
+                aceptar.textContent =
+                    "✓ YO SÉ QUE QUIERES IR";
+            }
+
+
+            if (false) {
+
+                gato.classList.add("acercarse");
+
+                pregunta.textContent =
+                    "YA PUES, VAS A IR 😡";
+
+                submensaje.textContent =
+                    "¡DEJA DE DECIR QUE NO!";
+
+                boton.textContent =
+                    "✕ NO QUIERO";
+
+            }
+
+
+            if (false) {
+
+                gato.classList.remove(
+                    "furioso",
+                    "acercarse"
+                );
+
+                gato.classList.add("ataque");
+
+                tarjeta.classList.add(
+                    "ataque-tarjeta"
+                );
+
+                pregunta.textContent =
+                    "¡YA ME HICISTE ENOJAR! 😡";
+
+                submensaje.textContent =
+                    "¡AHORA SÍ TE VOY A ARAÑAR!";
+
+                boton.textContent =
+                    "✕ NO QUIERO";
+
+                document
+                    .getElementById("arañazos")
+                    .classList.add("mostrar");
+
+            }
+
+
+            tarjeta.classList.remove(
+                "temblar"
+            );
+
+            void tarjeta.offsetWidth;
+
+            tarjeta.classList.add(
+                "temblar"
+            );
+
+        }
+
+
+        let intervaloParticulas = null;
+
+        function crearParticulaSangre() {
+
+            const contenedor =
+                document.getElementById(
+                    "particulasSangre"
+                );
+
+            if (!contenedor) return;
+
+            const particula =
+                document.createElement("span");
+
+            particula.className =
+                "particula-sangre";
+
+            particula.style.left =
+                (Math.random() * 100) + "%";
+
+            particula.style.setProperty(
+                "--duracion",
+                (3.2 + Math.random() * 2.8) + "s"
+            );
+
+            particula.style.setProperty(
+                "--retraso",
+                (Math.random() * .35) + "s"
+            );
+
+            particula.style.setProperty(
+                "--tamano",
+                (2 + Math.random() * 5) + "px"
+            );
+
+            particula.style.setProperty(
+                "--movimiento",
+                ((Math.random() * 140) - 70) + "px"
+            );
+
+            particula.style.setProperty(
+                "--giro",
+                ((Math.random() * 720) - 360) + "deg"
+            );
+
+            contenedor.appendChild(particula);
+
+            setTimeout(
+                () => particula.remove(),
+                7000
+            );
+
+        }
+
+
+        function iniciarParticulasSangre() {
+
+            if (intervaloParticulas) return;
+
+            for (
+                let i = 0;
+                i < 24;
+                i++
+            ) {
+
+                setTimeout(
+                    crearParticulaSangre,
+                    i * 100
+                );
+
+            }
+
+            intervaloParticulas =
+                setInterval(
+                    crearParticulaSangre,
+                    180
+                );
+
+        }
+
+
+        function aceptar() {
+
+            window.location.href =
+                "fotos.html";
+
+            return;
+
+
+            const tarjeta =
+                document.getElementById(
+                    "tarjeta"
+                );
+
+            tarjeta.innerHTML = `
+
+                <div class="borde-superior"></div>
+
+                <div class="aceptado">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <h1>
+                        ¡ACEPTASTE!
+                    </h1>
+
+                    <div class="linea-final"></div>
+
+                    <p>
+                        Sabía que ibas a aceptar,
+                        renegona 😌
+                    </p>
+
+                    <strong>
+                        NOS VEMOS EN EL CINE
+                    </strong>
+
+                    <span>
+                        16 DE DICIEMBRE · MALLANGAMOS
+                    </span>
+
+                    <button
+                        onclick="location.reload()">
+
+                        VOLVER
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
